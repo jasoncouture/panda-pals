@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda", "Panda\Panda.csproj", "{2FEE7D7D-6392-41A7-AC0D-0DCC92BA6BA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Clustering", "Panda.Clustering\Panda.Clustering.csproj", "{26D4FA18-E56D-4FE8-9931-DC47E29D675E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Clustering.UnitTests", "Panda.Clustering.UnitTests\Panda.Clustering.UnitTests.csproj", "{54C77329-5933-4346-9A53-C790171C800B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Logging", "Panda.Logging\Panda.Logging.csproj", "{E7AA0ECF-29A2-429C-B8BB-8160D0606E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Logging.UnitTests", "Panda.Logging.UnitTests\Panda.Logging.UnitTests.csproj", "{CCA9F344-F544-4E76-812D-2986DD309D7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2FEE7D7D-6392-41A7-AC0D-0DCC92BA6BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FEE7D7D-6392-41A7-AC0D-0DCC92BA6BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FEE7D7D-6392-41A7-AC0D-0DCC92BA6BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FEE7D7D-6392-41A7-AC0D-0DCC92BA6BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26D4FA18-E56D-4FE8-9931-DC47E29D675E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26D4FA18-E56D-4FE8-9931-DC47E29D675E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26D4FA18-E56D-4FE8-9931-DC47E29D675E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26D4FA18-E56D-4FE8-9931-DC47E29D675E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C77329-5933-4346-9A53-C790171C800B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C77329-5933-4346-9A53-C790171C800B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C77329-5933-4346-9A53-C790171C800B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C77329-5933-4346-9A53-C790171C800B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7AA0ECF-29A2-429C-B8BB-8160D0606E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7AA0ECF-29A2-429C-B8BB-8160D0606E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7AA0ECF-29A2-429C-B8BB-8160D0606E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7AA0ECF-29A2-429C-B8BB-8160D0606E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCA9F344-F544-4E76-812D-2986DD309D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCA9F344-F544-4E76-812D-2986DD309D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCA9F344-F544-4E76-812D-2986DD309D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCA9F344-F544-4E76-812D-2986DD309D7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
