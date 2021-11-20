@@ -24,11 +24,25 @@ public class Crc32CheckSumProvider : IChecksumProvider
         }).ToArray();
     }
 
-    public uint ComputeChecksum(IEnumerable<byte> byteStream)
+    public uint ComputeChecksum(params IEnumerable<byte>[] byteStream)
     {
         if (byteStream == null) throw new ArgumentNullException(nameof(byteStream));
         // Initialize checksumRegister to 0xFFFFFFFF and calculate the checksum.
-        return ~byteStream.Aggregate(0xFFFFFFFF, (checksumRegister, currentByte) =>
-            (_checksumTable[(checksumRegister & 0xFF) ^ Convert.ToByte(currentByte)] ^ (checksumRegister >> 8)));
+        var register = 0xFFFFFFFF;
+        for (var x = 0; x < byteStream.Length; x++)
+        {
+            register = ComputePartialChecksum(register, byteStream[x]);
+        }
+        return ~register;
+    }
+
+    private uint ComputePartialChecksum(uint register, IEnumerable<byte> bytes)
+    {
+        foreach (var b in bytes)
+        {
+            register = (_checksumTable[(register & 0xFF) ^ b] ^ (register >> 8));
+        }
+
+        return register;
     }
 }
