@@ -45,7 +45,7 @@ public class ChecksumTests
     {
         IChecksumProvider sut = new Crc32CheckSumProvider();
         var inputBytes = Encoding.UTF8.GetBytes(inputString);
-        var result = sut.VerifyChecksum(inputBytes, checksum);
+        var result = sut.VerifyChecksum(checksum, inputBytes);
         Assert.Equal(expected, result);
     }
 

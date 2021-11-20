@@ -2,6 +2,6 @@
 
 public interface IChecksumProvider
 {
-    uint ComputeChecksum(IEnumerable<byte> bytes);
-    bool VerifyChecksum(IEnumerable<byte> bytes, uint checkSum) => ComputeChecksum(bytes) == checkSum;
+    uint ComputeChecksum(params IEnumerable<byte>[] bytes);
+    bool VerifyChecksum(uint checkSum, params IEnumerable<byte>[] bytes) => ComputeChecksum(bytes) == checkSum;
 }
