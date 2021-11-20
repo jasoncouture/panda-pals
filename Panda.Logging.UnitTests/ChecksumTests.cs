@@ -54,6 +54,6 @@ public class ChecksumTests
     {
         var sut = new Crc32CheckSumProvider();
 
-        Assert.Throws<ArgumentNullException>("byteStream", () => sut.ComputeChecksum(null));
+        Assert.Throws<ArgumentNullException>("byteStream", () => sut.ComputeChecksum(null!));
     }
 }
