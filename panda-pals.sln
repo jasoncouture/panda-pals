@@ -1,25 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda", "Panda\Panda.csproj", "{2FEE7D7D-6392-41A7-AC0D-0DCC92BA6BA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda", "Panda\Panda.csproj", "{2FEE7D7D-6392-41A7-AC0D-0DCC92BA6BA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Clustering", "Panda.Clustering\Panda.Clustering.csproj", "{26D4FA18-E56D-4FE8-9931-DC47E29D675E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Clustering", "Panda.Clustering\Panda.Clustering.csproj", "{26D4FA18-E56D-4FE8-9931-DC47E29D675E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Clustering.UnitTests", "Panda.Clustering.UnitTests\Panda.Clustering.UnitTests.csproj", "{54C77329-5933-4346-9A53-C790171C800B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Clustering.UnitTests", "Panda.Clustering.UnitTests\Panda.Clustering.UnitTests.csproj", "{54C77329-5933-4346-9A53-C790171C800B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Logging", "Panda.Logging\Panda.Logging.csproj", "{E7AA0ECF-29A2-429C-B8BB-8160D0606E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Logging", "Panda.Logging\Panda.Logging.csproj", "{E7AA0ECF-29A2-429C-B8BB-8160D0606E1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Logging.UnitTests", "Panda.Logging.UnitTests\Panda.Logging.UnitTests.csproj", "{CCA9F344-F544-4E76-812D-2986DD309D7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Logging.UnitTests", "Panda.Logging.UnitTests\Panda.Logging.UnitTests.csproj", "{CCA9F344-F544-4E76-812D-2986DD309D7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{7C8950DD-9A83-4489-B134-EC1B32E6DBE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{33D94198-2659-43F9-8128-07BBEE9F1087}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2FEE7D7D-6392-41A7-AC0D-0DCC92BA6BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -42,5 +47,14 @@ Global
 		{CCA9F344-F544-4E76-812D-2986DD309D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCA9F344-F544-4E76-812D-2986DD309D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCA9F344-F544-4E76-812D-2986DD309D7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33D94198-2659-43F9-8128-07BBEE9F1087} = {7C8950DD-9A83-4489-B134-EC1B32E6DBE2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8C121A8-3C3A-46B2-AD62-DFFC9C8FEA0E}
 	EndGlobalSection
 EndGlobal
