@@ -56,4 +56,17 @@ public class ChecksumTests
 
         Assert.Throws<ArgumentNullException>("byteStream", () => sut.ComputeChecksum(null!));
     }
+
+    [Fact]
+    public void TwoArraysPassedInOrderProducesSameOutputAsSameDataInSingleArray()
+    {
+        var combinedTestCase = new byte[] { 1, 2, 3, 4 };
+        var separatedTestCase = new[] { new byte[] { 1, 2 }, new byte[] { 3, 4 } };
+        var sut = new Crc32CheckSumProvider();
+
+        var expected = sut.ComputeChecksum(combinedTestCase);
+        var actual = sut.ComputeChecksum(separatedTestCase[0], separatedTestCase[1]);
+
+        Assert.Equal(expected, actual);
+    }
 }
