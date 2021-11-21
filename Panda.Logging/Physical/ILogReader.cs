@@ -1,4 +1,4 @@
-﻿namespace Panda.Logging;
+﻿namespace Panda.Logging.Physical;
 
 public interface ILogReader
 {

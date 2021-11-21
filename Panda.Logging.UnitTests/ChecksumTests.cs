@@ -1,3 +1,4 @@
+using Panda.Logging.Physical;
 using System;
 using System.Text;
 using Xunit;

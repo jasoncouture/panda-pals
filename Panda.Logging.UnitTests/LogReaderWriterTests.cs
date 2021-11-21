@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
+using Panda.Logging.Physical;
 using Xunit;
 
 namespace Panda.Logging.UnitTests;

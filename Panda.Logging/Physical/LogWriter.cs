@@ -1,4 +1,6 @@
-﻿namespace Panda.Logging;
+﻿using Panda.Logging.Endianness;
+
+namespace Panda.Logging.Physical;
 
 public class LogWriter : ILogWriter
 {

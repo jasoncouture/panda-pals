@@ -1,6 +1,7 @@
-﻿using System.Buffers;
+﻿using Panda.Logging.Endianness;
+using System.Buffers;
 
-namespace Panda.Logging;
+namespace Panda.Logging.Physical;
 
 public class LogReader : ILogReader
 {
@@ -57,7 +58,7 @@ public class LogReader : ILogReader
             }
 
             var serialNumber = BitConverter.ToInt64(sequenceBytes.EnsureLittleEndian());
-            
+
             return new LogEntry(serialNumber, dataBytes);
         }
         finally
