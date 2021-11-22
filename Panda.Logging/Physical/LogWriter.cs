@@ -13,16 +13,24 @@ public class LogWriter : ILogWriter
 
     public async Task WriteAsync(Stream writer, LogEntry logEntry, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested(); // Last chance, otherwise we're doing this and ignoring your cancellationToken...
         var serialNumberBytes = BitConverter.GetBytes(logEntry.SerialNumber).EnsureLittleEndian();
+        var timestampBytes = BitConverter.GetBytes(logEntry.Timestamp).EnsureLittleEndian();
         var dataLengthBytes = BitConverter.GetBytes(logEntry.Data.LongLength).EnsureLittleEndian();
         // This does mean we loop over the data twice, but we do avoid copying all of it to a new buffer
         // to compute the checksum.
-        var checksum = _checksumProvider.ComputeChecksum(serialNumberBytes, dataLengthBytes, logEntry.Data);
-        await writer.WriteAsync(serialNumberBytes, cancellationToken).ConfigureAwait(false);
-        await writer.WriteAsync(dataLengthBytes, cancellationToken).ConfigureAwait(false);
+        var checksum = _checksumProvider.ComputeChecksum(serialNumberBytes, timestampBytes, dataLengthBytes, logEntry.Data);
+        var checksumBytes = BitConverter.GetBytes(checksum).EnsureLittleEndian();
+        await WriteWithoutCancellation(writer, serialNumberBytes, timestampBytes, dataLengthBytes, logEntry.Data,
+            checksumBytes).ConfigureAwait(false);
+    }
 
-        if (logEntry.Data.LongLength > 0)
-            await writer.WriteAsync(logEntry.Data, cancellationToken).ConfigureAwait(false);
-        await writer.WriteAsync(BitConverter.GetBytes(checksum).EnsureLittleEndian(), cancellationToken).ConfigureAwait(false);
+    private async Task WriteWithoutCancellation(Stream writer, params byte[][] dataBlocks)
+    {
+        foreach (var block in dataBlocks)
+        {
+            if (block.Length == 0) continue;
+            await writer.WriteAsync(block, CancellationToken.None).ConfigureAwait(false);
+        }
     }
 }

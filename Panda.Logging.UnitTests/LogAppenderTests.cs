@@ -17,7 +17,7 @@ public class LogAppenderTests
         const long entriesPerSegment = 5000;
         const int dataSize = sizeof(long);
         // Log format is: Serial (64 bit) - Data size (64 bit) - Data (Data size * 8 bits) - Checksum (32 bits)
-        var recordSize = sizeof(long) + sizeof(long) + dataSize + sizeof(int);
+        var recordSize = sizeof(long) + sizeof(long)  + sizeof(long) + dataSize + sizeof(int);
         var expectedFileSize = recordSize * entriesPerSegment;
         var target = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), nameof(LogAppenderTests), Path.GetRandomFileName()));
         await using var logAppender = new LogAppender(target.FullName, -1, entriesPerSegment, new LogWriter(new Crc32CheckSumProvider()));
