@@ -6,7 +6,10 @@ namespace Panda.Logging.Physical;
 public class LogReader : ILogReader
 {
     private readonly IChecksumProvider _checksumProvider;
-
+    const int BufferSize = 16384;
+    private static ArrayPool<byte> LongPool = ArrayPool<byte>.Create(sizeof(long), 16384);
+    private static ArrayPool<byte> IntPool = ArrayPool<byte>.Create(sizeof(int), 16384);
+    private static ArrayPool<byte> BufferPool = ArrayPool<byte>.Create(BufferSize, 16384);
     public LogReader(IChecksumProvider checksumProvider)
     {
         _checksumProvider = checksumProvider;
@@ -14,22 +17,37 @@ public class LogReader : ILogReader
 
     public async Task<LogEntry> ReadAsync(Stream reader, bool validateChecksum, CancellationToken cancellationToken)
     {
-        const int SequenceByteLength = 8;
-        const int LengthByteLength = 8;
-        const int ChecksumByteLength = 4;
-        const int BufferSize = 16384;
+        const int SequenceByteLength = sizeof(long);
+        const int TimestampByteLength = sizeof(long);
+        const int LengthByteLength = sizeof(long);
+        const int ChecksumByteLength = sizeof(uint);
+        
         // This function will be used _a lot_
         // So, let's avoid any non-stack allocations we can where possible.
         // ArrayPool will allow us to share these buffers and never free them.
         // but we can't use it for the actual data bytes, and we MUST make sure they
         // get returned at the end of the function.
-        var sequenceBytes = ArrayPool<byte>.Shared.Rent(SequenceByteLength);
-        var lengthBytes = ArrayPool<byte>.Shared.Rent(LengthByteLength);
-        var checksumBytes = ArrayPool<byte>.Shared.Rent(ChecksumByteLength);
-        var readBuffer = ArrayPool<byte>.Shared.Rent(BufferSize);
+        var sequenceBytes = LongPool.Rent(SequenceByteLength);
+        var timestampBytes = LongPool.Rent(TimestampByteLength);
+        var lengthBytes = LongPool.Rent(LengthByteLength);
+
+        var checksumBytes = IntPool.Rent(ChecksumByteLength);
+
+        var readBuffer = BufferPool.Rent(BufferSize);
         try
         {
+            var versionByte = reader.ReadByte();
+            if (versionByte > LogFormatConstants.LogVersion)
+                throw new InvalidOperationException("Unexpected log version!")
+                {
+                    Data =
+                    {
+                        ["versionFound"] = versionByte,
+                        ["maximumSupportedVersion"] = LogFormatConstants.LogVersion
+                    }
+                };
             await reader.ReadAsync(sequenceBytes, 0, SequenceByteLength, cancellationToken).ConfigureAwait(false);
+            await reader.ReadAsync(timestampBytes, 0, TimestampByteLength, cancellationToken).ConfigureAwait(false);
             await reader.ReadAsync(lengthBytes, 0, LengthByteLength, cancellationToken).ConfigureAwait(false);
             var dataByteLength = BitConverter.ToInt64(lengthBytes.EnsureLittleEndian(), 0);
             var dataBytes = new byte[dataByteLength];
@@ -51,22 +69,24 @@ public class LogReader : ILogReader
             if (validateChecksum)
             {
                 var checksum = BitConverter.ToUInt32(checksumBytes.EnsureLittleEndian());
-                if (!_checksumProvider.VerifyChecksum(checksum, sequenceBytes.EnsureLittleEndian(), lengthBytes.EnsureLittleEndian(), dataBytes))
+                if (!_checksumProvider.VerifyChecksum(checksum, sequenceBytes.EnsureLittleEndian(), timestampBytes.EnsureLittleEndian(), lengthBytes.EnsureLittleEndian(), dataBytes))
                 {
                     throw new InvalidDataException("Checksum in stream does not match computed checksum.");
                 }
             }
 
             var serialNumber = BitConverter.ToInt64(sequenceBytes.EnsureLittleEndian());
+            var timestamp = BitConverter.ToInt64(timestampBytes.EnsureLittleEndian());
 
-            return new LogEntry(serialNumber, dataBytes);
+            return new LogEntry(serialNumber, timestamp, dataBytes);
         }
         finally
         {
-            ArrayPool<byte>.Shared.Return(sequenceBytes);
-            ArrayPool<byte>.Shared.Return(lengthBytes);
-            ArrayPool<byte>.Shared.Return(readBuffer);
-            ArrayPool<byte>.Shared.Return(checksumBytes);
+            LongPool.Return(sequenceBytes);
+            LongPool.Return(timestampBytes);
+            LongPool.Return(lengthBytes);
+            BufferPool.Return(readBuffer);
+            IntPool.Return(checksumBytes);
         }
     }
 }
