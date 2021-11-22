@@ -1,4 +1,4 @@
-﻿namespace Panda.Logging;
+﻿namespace Panda.Logging.Endianness;
 
 public static class ByteArrayExtensions
 {

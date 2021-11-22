@@ -1,6 +1,7 @@
-﻿using System.Buffers;
+﻿using Panda.Logging.Endianness;
+using System.Buffers;
 
-namespace Panda.Logging;
+namespace Panda.Logging.Physical;
 
 public class LogReader : ILogReader
 {
@@ -28,8 +29,8 @@ public class LogReader : ILogReader
         var readBuffer = ArrayPool<byte>.Shared.Rent(BufferSize);
         try
         {
-            await reader.ReadAsync(sequenceBytes, 0, SequenceByteLength, cancellationToken);
-            await reader.ReadAsync(lengthBytes, 0, LengthByteLength, cancellationToken);
+            await reader.ReadAsync(sequenceBytes, 0, SequenceByteLength, cancellationToken).ConfigureAwait(false);
+            await reader.ReadAsync(lengthBytes, 0, LengthByteLength, cancellationToken).ConfigureAwait(false);
             var dataByteLength = BitConverter.ToInt64(lengthBytes.EnsureLittleEndian(), 0);
             var dataBytes = new byte[dataByteLength];
             int currentOffset = 0;
@@ -37,7 +38,7 @@ public class LogReader : ILogReader
             while (dataByteLength > 0)
             {
                 var bytesToRead = dataByteLength > readBuffer.Length ? readBuffer.Length : (int)dataByteLength;
-                var bytesRead = await reader.ReadAsync(readBuffer, 0, bytesToRead, cancellationToken);
+                var bytesRead = await reader.ReadAsync(readBuffer, 0, bytesToRead, cancellationToken).ConfigureAwait(false);
                 if (bytesRead == 0) throw new EndOfStreamException("The log stream ended unexpectedly.");
                 Array.Copy(readBuffer, 0, dataBytes, currentOffset, bytesRead);
                 currentOffset += bytesRead;
@@ -45,7 +46,7 @@ public class LogReader : ILogReader
 
             }
 
-            await reader.ReadAsync(checksumBytes, 0, ChecksumByteLength, cancellationToken);
+            await reader.ReadAsync(checksumBytes, 0, ChecksumByteLength, cancellationToken).ConfigureAwait(false);
 
             if (validateChecksum)
             {
@@ -57,7 +58,7 @@ public class LogReader : ILogReader
             }
 
             var serialNumber = BitConverter.ToInt64(sequenceBytes.EnsureLittleEndian());
-            
+
             return new LogEntry(serialNumber, dataBytes);
         }
         finally

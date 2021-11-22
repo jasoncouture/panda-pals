@@ -1,4 +1,4 @@
-﻿namespace Panda.Logging;
+﻿namespace Panda.Logging.Physical;
 
 /// <summary>
 /// Performs 32-bit reversed cyclic redundancy checks.
@@ -16,9 +16,9 @@ public class Crc32CheckSumProvider : IChecksumProvider
             var tableEntry = (uint)i;
             for (var j = 0; j < 8; ++j)
             {
-                tableEntry = ((tableEntry & 1) != 0)
-                    ? (Generator ^ (tableEntry >> 1))
-                    : (tableEntry >> 1);
+                tableEntry = (tableEntry & 1) != 0
+                    ? Generator ^ tableEntry >> 1
+                    : tableEntry >> 1;
             }
             return tableEntry;
         }).ToArray();
@@ -40,7 +40,7 @@ public class Crc32CheckSumProvider : IChecksumProvider
     {
         foreach (var b in bytes)
         {
-            register = (_checksumTable[(register & 0xFF) ^ b] ^ (register >> 8));
+            register = _checksumTable[register & 0xFF ^ b] ^ register >> 8;
         }
 
         return register;
