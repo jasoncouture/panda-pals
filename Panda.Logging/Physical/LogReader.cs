@@ -36,6 +36,16 @@ public class LogReader : ILogReader
         var readBuffer = BufferPool.Rent(BufferSize);
         try
         {
+            var versionByte = reader.ReadByte();
+            if (versionByte > LogFormatConstants.LogVersion)
+                throw new InvalidOperationException("Unexpected log version!")
+                {
+                    Data =
+                    {
+                        ["versionFound"] = versionByte,
+                        ["maximumSupportedVersion"] = LogFormatConstants.LogVersion
+                    }
+                };
             await reader.ReadAsync(sequenceBytes, 0, SequenceByteLength, cancellationToken).ConfigureAwait(false);
             await reader.ReadAsync(timestampBytes, 0, TimestampByteLength, cancellationToken).ConfigureAwait(false);
             await reader.ReadAsync(lengthBytes, 0, LengthByteLength, cancellationToken).ConfigureAwait(false);

@@ -32,7 +32,7 @@ public class LogReaderWriterTests
     {
         var logWriter = new LogWriter(_checksumProvider);
         // Because we are writing no data, we expect this record to be 28 bytes.
-        const int expectedLength = 8 + 8 + 8 + 4;
+        const int expectedLength = sizeof(byte) + sizeof(long) + sizeof(long) + sizeof(long) + sizeof(int);
         const byte expectedByte = 0; // We expect all bytes to be 0, because we have a 0 serial number, 0 length, and 0 checksum (see constructor)
         await using var memoryStream = new MemoryStream();
         await logWriter.WriteAsync(memoryStream, new LogEntry(0, 0, Array.Empty<byte>()), CancellationToken.None);

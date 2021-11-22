@@ -2,6 +2,12 @@
 
 namespace Panda.Logging.Physical;
 
+public static class LogFormatConstants
+{
+    public const byte LogVersion = 0;
+    public static readonly byte[] LogVersionBytes = new[] { LogVersion };
+}
+
 public class LogWriter : ILogWriter
 {
     private readonly IChecksumProvider _checksumProvider;
@@ -19,9 +25,9 @@ public class LogWriter : ILogWriter
         var dataLengthBytes = BitConverter.GetBytes(logEntry.Data.LongLength).EnsureLittleEndian();
         // This does mean we loop over the data twice, but we do avoid copying all of it to a new buffer
         // to compute the checksum.
-        var checksum = _checksumProvider.ComputeChecksum(serialNumberBytes, timestampBytes, dataLengthBytes, logEntry.Data);
+        var checksum = _checksumProvider.ComputeChecksum(LogFormatConstants.LogVersionBytes, serialNumberBytes, timestampBytes, dataLengthBytes, logEntry.Data);
         var checksumBytes = BitConverter.GetBytes(checksum).EnsureLittleEndian();
-        await WriteWithoutCancellation(writer, serialNumberBytes, timestampBytes, dataLengthBytes, logEntry.Data,
+        await WriteWithoutCancellation(writer, LogFormatConstants.LogVersionBytes, serialNumberBytes, timestampBytes, dataLengthBytes, logEntry.Data,
             checksumBytes).ConfigureAwait(false);
     }
 
