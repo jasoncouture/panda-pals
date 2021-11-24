@@ -1,8 +1,12 @@
+using System;
 using Cake.Common;
+using Cake.Common.Build;
 using Cake.Common.Tools.DotNet.Build;
 using Cake.Common.Tools.DotNet.Publish;
 using Cake.Common.Tools.DotNet.Restore;
 using Cake.Common.Tools.DotNet.Test;
+using Cake.Common.Tools.DotNetCore;
+using Cake.Common.Tools.GitVersion;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
@@ -17,6 +21,9 @@ public class BuildContext : FrostingContext
     public bool Restore { get; init; }
     public string Project { get; init; }
     public string WorkingDirectory { get; init; }
+    public GitVersion CurrentGitVersionData => _currentGitVersionLazy.Value;
+    private readonly Lazy<GitVersion> _currentGitVersionLazy;
+
     public BuildContext(ICakeContext context)
         : base(context)
     {
@@ -29,6 +36,26 @@ public class BuildContext : FrostingContext
         Restore = context.Argument("restore-packages", true);
         Project = context.Argument("project", "panda-pals.sln");
         WorkingDirectory = context.Argument("working-directory", System.IO.Path.GetFullPath(".."));
+
+        _currentGitVersionLazy = new Lazy<GitVersion>(() =>
+        {
+            if (!this.BuildSystem().IsLocalBuild)
+            {
+                this.GitVersion(new GitVersionSettings
+                {
+                    UpdateAssemblyInfo = true,
+                    OutputType = GitVersionOutput.BuildServer,
+                    WorkingDirectory = WorkingDirectory
+                });
+            }
+
+            return this.GitVersion(new GitVersionSettings()
+            {
+                UpdateAssemblyInfo = false,
+                OutputType = GitVersionOutput.Json,
+                WorkingDirectory = WorkingDirectory
+            });
+        });
     }
 
     public DotNetBuildSettings GetDotNetBuildSettings() =>
@@ -37,7 +64,8 @@ public class BuildContext : FrostingContext
             WorkingDirectory = WorkingDirectory,
             Configuration = MsBuildConfiguration,
             NoRestore = true,
-            NoLogo = true
+            NoLogo = true,
+            Verbosity = DotNetCoreVerbosity.Minimal
         };
 
     public DotNetRestoreSettings GetDotNetRestoreSettings() =>
@@ -46,7 +74,8 @@ public class BuildContext : FrostingContext
             ArgumentCustomization = builder =>
                 builder.AppendSwitch("-r", RuntimeIdentifier)
                     .AppendSwitch("-property:Configuration", "=", MsBuildConfiguration),
-            WorkingDirectory = WorkingDirectory
+            WorkingDirectory = WorkingDirectory,
+            Verbosity = DotNetCoreVerbosity.Minimal
         };
 
     public DotNetTestSettings GetDotNetTestSettings() =>
@@ -56,7 +85,8 @@ public class BuildContext : FrostingContext
             WorkingDirectory = WorkingDirectory,
             NoBuild = true,
             NoRestore = true,
-            NoLogo = true
+            NoLogo = true,
+            Verbosity = DotNetCoreVerbosity.Minimal
         };
 
     public DotNetPublishSettings GetDotNetPublishSettings() =>
@@ -65,7 +95,11 @@ public class BuildContext : FrostingContext
             Configuration = MsBuildConfiguration,
             Runtime = RuntimeIdentifier,
             WorkingDirectory = WorkingDirectory,
-            OutputDirectory = System.IO.Path.Combine(WorkingDirectory, "output"),
-            Force = true
+            OutputDirectory = System.IO.Path.Combine(WorkingDirectory, "output", RuntimeIdentifier),
+            Force = true,
+            Verbosity = DotNetCoreVerbosity.Minimal,
+            SelfContained = true,
+            PublishReadyToRun = true,
+            PublishSingleFile = true
         };
 }

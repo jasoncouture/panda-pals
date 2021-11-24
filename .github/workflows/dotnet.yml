@@ -28,6 +28,8 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore .NET Tools
       run: dotnet tool restore
+    - name: Install gitversion tool (global)
+      run: dotnet tool install -g gitversion.tool
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
