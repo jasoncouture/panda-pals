@@ -30,9 +30,15 @@ jobs:
       run: dotnet tool restore
     - name: Install gitversion tool (global)
       run: dotnet tool install -g gitversion.tool
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Build and test
+      run: bash ./build.sh
+    - name: Run frosting build (Linux-x64)
+      run: bash ./build.sh --target CreatePackage --runtime linux-x64
+    - name: Run frosting build (Win10-x64)
+      run: bash ./build.sh --target CreatePackage --runtime win10-x64
+    - name: Run frosting build (Win10-arm64)
+      run: bash ./build.sh --target CreatePackage --runtime win10-arm64
+    - name: Run frosting build (osx.11.0-x64)
+      run: bash ./build.sh --target CreatePackage --runtime osx.11.0-x64
+    - name: Run frosting build (osx.11.0-arm64)
+      run: bash ./build.sh --target CreatePackage --runtime osx.11.0-arm64
