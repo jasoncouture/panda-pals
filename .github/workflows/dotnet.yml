@@ -19,9 +19,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-build-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-build-nuget-
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -46,9 +46,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-linux-x64-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-linux-x64-nuget-
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -77,9 +77,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-win10-x64-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-win10-x64-nuget-
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -109,9 +109,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-win10-arm64-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-win10-arm64-nuget-
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -140,9 +140,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-osx11-x64-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-osx11-x64-nuget-
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -172,9 +172,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        key: ${{ runner.os }}-osx11-arm64-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-osx11-arm64-nuget-
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
