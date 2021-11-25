@@ -7,8 +7,6 @@ using Cake.Frosting;
 namespace Build.Tasks;
 
 [TaskName("Publish")]
-[IsDependentOn(typeof(BuildTask))]
-[IsDependentOn(typeof(TestTask))]
 public class PublishTask : FrostingTask<BuildContext>
 {
     public override bool ShouldRun(BuildContext context) => context.PackageRelease;
