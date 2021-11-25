@@ -34,7 +34,7 @@ jobs:
       run: bash ./build.sh
   
         
-  publish:
+  publish-linux-x64:
     runs-on: ubuntu-latest
 
     steps:
@@ -58,20 +58,131 @@ jobs:
       run: dotnet tool install -g gitversion.tool
     - name: Run frosting build (Linux-x64)
       run: bash ./build.sh --target Publish --runtime linux-x64
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build-output-linux-x64
+        path: ./output/**/*
+
+  publish-win10-x64:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+    - name: Setup NuGet cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore .NET Tools
+      run: dotnet tool restore
+    - name: Install gitversion tool (global)
+      run: dotnet tool install -g gitversion.tool
     
     - name: Run frosting build (Win10-x64)
       run: bash ./build.sh --target Publish --runtime win10-x64
-    
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build-output-win10-x64
+        path: ./output/**/*
+
+  publish-win10-arm64:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+    - name: Setup NuGet cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore .NET Tools
+      run: dotnet tool restore
+    - name: Install gitversion tool (global)
+      run: dotnet tool install -g gitversion.tool    
     - name: Run frosting build (Win10-arm64)
       run: bash ./build.sh --target Publish --runtime win10-arm64
 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build-output-win10-arm64
+        path: ./output/**/*
+
+  publish-osx11-x64:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+    - name: Setup NuGet cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore .NET Tools
+      run: dotnet tool restore
+    - name: Install gitversion tool (global)
+      run: dotnet tool install -g gitversion.tool
+
     - name: Run frosting build (osx.11.0-x64)
       run: bash ./build.sh --target Publish --runtime osx.11.0-x64
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build-output-osx11-x64
+        path: ./output/**/*
+
+  publish-osx11-arm64:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+    - name: Setup NuGet cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore .NET Tools
+      run: dotnet tool restore
+    - name: Install gitversion tool (global)
+      run: dotnet tool install -g gitversion.tool
 
     - name: Run frosting build (osx.11.0-arm64)
       run: bash ./build.sh --target Publish --runtime osx.11.0-arm64
 
     - uses: actions/upload-artifact@v2
       with:
-        name: build-output
+        name: build-output-osx11-arm64
         path: ./output/**/*
