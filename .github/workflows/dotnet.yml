@@ -35,35 +35,20 @@ jobs:
 
     - name: Run frosting build (Linux-x64)
       run: bash ./build.sh --target Publish --runtime linux-x64
-    - uses: actions/upload-artifact@v2
-      with:
-        name: build-output-linux-x64
-        path: ./output/**/*
     
     - name: Run frosting build (Win10-x64)
       run: bash ./build.sh --target Publish --runtime win10-x64
-    - uses: actions/upload-artifact@v2
-      with:
-        name: build-output-win10-x64
-        path: ./output/**/*
     
     - name: Run frosting build (Win10-arm64)
       run: bash ./build.sh --target Publish --runtime win10-arm64
-    - uses: actions/upload-artifact@v2
-      with:
-        name: build-output-win10-arm
-        path: ./output/**/*
 
     - name: Run frosting build (osx.11.0-x64)
       run: bash ./build.sh --target Publish --runtime osx.11.0-x64
-    - uses: actions/upload-artifact@v2
-      with:
-        name: build-output-osx11-x64
-        path: ./output/**/*
 
     - name: Run frosting build (osx.11.0-arm64)
       run: bash ./build.sh --target Publish --runtime osx.11.0-arm64
+
     - uses: actions/upload-artifact@v2
       with:
-        name: build-output-osx11-arm64
+        name: build-output
         path: ./output/**/*
