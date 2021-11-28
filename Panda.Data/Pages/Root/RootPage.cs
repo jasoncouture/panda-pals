@@ -1,7 +1,7 @@
 ﻿namespace Panda.Data.Pages.Root;
 
 [PageType(PageType.Root)]
-public record RootPage(byte FileVersion, byte PageSizePower, uint Checksum, ulong FreePageIndexPageNumber, ulong RootContinuationPageNumber, byte[]? PageData) : IPage<RootPage>
+public record RootPage(byte FileVersion, byte PageSizePower, uint Checksum, ulong FreePageIndexPageNumber, ulong RootContinuationPageNumber, byte[]? PageData, bool PageSizeChangeNeeded = false) : IPage<RootPage>
 {
     // PageType.Root (1) Must be at page 0, and mirrored at page 1
     // This page Describes metadata about the file

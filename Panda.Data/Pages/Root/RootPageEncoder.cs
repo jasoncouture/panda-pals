@@ -6,8 +6,6 @@ public class RootPageEncoder : IPageEncoder<RootPage>, IPageDecoder<RootPage>
     public RootPage DecodePage(ReadOnlyMemory<byte> page)
     {
         var span = page.Span;
-        var pageType = (PageType)span[0];
-        if (pageType != PageType.Root) throw new InvalidOperationException("This page is not a root page!");
         var pageFileVersion = span[1];
         var pageSizePower = span[2];
         var temporaryRootPage = new RootPage(pageFileVersion, pageSizePower, 0, 0, 0, Array.Empty<byte>());
@@ -15,7 +13,7 @@ public class RootPageEncoder : IPageEncoder<RootPage>, IPageDecoder<RootPage>
         var pageSize = temporaryRootPage.PageSize;
         if (pageSize > page.Length)
         {
-            return temporaryRootPage with { PageData = null };
+            return temporaryRootPage with { PageData = null, PageSizeChangeNeeded = true };
         }
 
         // Good to go!
