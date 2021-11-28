@@ -8,8 +8,9 @@ using Cake.Common.Tools.DotNet.Test;
 using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.GitVersion;
 using Cake.Core;
-using Cake.Core.IO;
 using Cake.Frosting;
+
+namespace Build;
 
 public class BuildContext : FrostingContext
 {

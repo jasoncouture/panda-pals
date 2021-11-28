@@ -1,4 +1,5 @@
-﻿using Panda.Logging.Endianness;
+﻿using Panda.DataIntegrity;
+using Panda.Logging.Endianness;
 using System.Buffers;
 
 namespace Panda.Logging.Physical;
@@ -51,7 +52,7 @@ public class LogReader : ILogReader
             await reader.ReadAsync(lengthBytes, 0, LengthByteLength, cancellationToken).ConfigureAwait(false);
             var dataByteLength = BitConverter.ToInt64(lengthBytes.EnsureLittleEndian(), 0);
             var dataBytes = new byte[dataByteLength];
-            int currentOffset = 0;
+            var currentOffset = 0;
 
             while (dataByteLength > 0)
             {

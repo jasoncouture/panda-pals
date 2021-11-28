@@ -1,4 +1,4 @@
-﻿namespace Panda.Logging.Physical;
+﻿namespace Panda.DataIntegrity;
 
 public interface IChecksumProvider
 {

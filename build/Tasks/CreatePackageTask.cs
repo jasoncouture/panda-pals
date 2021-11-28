@@ -1,8 +1,6 @@
-using System.IO;
 using System.Linq;
 using System.Text;
 using Cake.Common.IO;
-using Cake.Common.Tools.GitVersion;
 using Cake.Core.IO;
 using Cake.Frosting;
 
@@ -26,7 +24,7 @@ public class CreatePackageTask : FrostingTask<BuildContext>
 
     private string BuildFileName(BuildContext context)
     {
-        StringBuilder releaseZipNameBuilder = new StringBuilder("release");
+        var releaseZipNameBuilder = new StringBuilder("release");
         var gitVersion = context.CurrentGitVersionData;
 
         releaseZipNameBuilder.AppendFormat("-{0}-{1}", gitVersion.SemVer, gitVersion.Sha[..7]);
