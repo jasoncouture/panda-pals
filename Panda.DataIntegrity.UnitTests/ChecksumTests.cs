@@ -1,9 +1,8 @@
-using Panda.DataIntegrity;
 using System;
 using System.Text;
 using Xunit;
 
-namespace Panda.Logging.UnitTests;
+namespace Panda.DataIntegrity.UnitTests;
 
 public class ChecksumTests
 {

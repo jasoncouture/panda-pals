@@ -2,11 +2,6 @@
 
 namespace Panda.Data.Pages;
 
-public interface IPageReader
-{
-    IUnknownPage? ReadPage(ReadOnlyMemory<byte> page);
-}
-
 public class PageReader : IPageReader
 {
     private readonly IEnumerable<IUnknownPageDecoder> _unknownPageDecoders;

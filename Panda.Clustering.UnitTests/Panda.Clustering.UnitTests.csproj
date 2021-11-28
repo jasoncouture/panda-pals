@@ -20,8 +20,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Panda.Clustering\Panda.Clustering.csproj" />
-  </ItemGroup>
-
 </Project>

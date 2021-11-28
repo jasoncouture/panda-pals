@@ -3,12 +3,6 @@ using Panda.Logging.Endianness;
 
 namespace Panda.Logging.Physical;
 
-public static class LogFormatConstants
-{
-    public const byte LogVersion = 0;
-    public static readonly byte[] LogVersionBytes = new[] { LogVersion };
-}
-
 public class LogWriter : ILogWriter
 {
     private readonly IChecksumProvider _checksumProvider;

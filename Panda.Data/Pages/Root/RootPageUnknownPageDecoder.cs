@@ -1,6 +1,4 @@
-﻿using Panda.Data.Pages.Root;
-
-namespace Panda.Data.Pages;
+﻿namespace Panda.Data.Pages.Root;
 
 public class RootPageUnknownPageDecoder : UnknownPageDecoderBase<RootPage>
 {

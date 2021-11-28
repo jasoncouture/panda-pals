@@ -10,6 +10,8 @@ using Cake.Common.Tools.GitVersion;
 using Cake.Core;
 using Cake.Frosting;
 
+namespace Build;
+
 public class BuildContext : FrostingContext
 {
     public string MsBuildConfiguration { get; init; }
