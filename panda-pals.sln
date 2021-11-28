@@ -32,6 +32,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Data", "Panda.Data\Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Data.UnitTests", "Panda.Data.UnitTests\Panda.Data.UnitTests.csproj", "{21ECCA30-EEF7-4FDE-BEAA-09F418710492}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.DataIntegrity", "Panda.DataIntegrity\Panda.DataIntegrity.csproj", "{586918A9-85B2-4AE3-A9E9-0B77C10780C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.DataIntegrity.UnitTests", "Panda.DataIntegrity.UnitTests\Panda.DataIntegrity.UnitTests.csproj", "{454E8B2A-C3B8-4D0A-8A65-2E81886F1A5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +74,14 @@ Global
 		{21ECCA30-EEF7-4FDE-BEAA-09F418710492}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21ECCA30-EEF7-4FDE-BEAA-09F418710492}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21ECCA30-EEF7-4FDE-BEAA-09F418710492}.Release|Any CPU.Build.0 = Release|Any CPU
+		{586918A9-85B2-4AE3-A9E9-0B77C10780C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{586918A9-85B2-4AE3-A9E9-0B77C10780C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{586918A9-85B2-4AE3-A9E9-0B77C10780C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{586918A9-85B2-4AE3-A9E9-0B77C10780C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{454E8B2A-C3B8-4D0A-8A65-2E81886F1A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{454E8B2A-C3B8-4D0A-8A65-2E81886F1A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{454E8B2A-C3B8-4D0A-8A65-2E81886F1A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{454E8B2A-C3B8-4D0A-8A65-2E81886F1A5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
