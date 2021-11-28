@@ -23,29 +23,37 @@ public interface IPage<T> : IUnknownPage where T : IPage<T>
 // PageType.RootContinuation (2)
 // This page follows the format of 273+ from the root page, but is preceeded by:
 // 1 - 8 - pointer to next continuation page, (0 if no more pages)
-// 9+ repeats the branch root page pointer format from the root records.
+// 9 - 12 - data length (data contains records as explained below)
+// 13 - 16 - CRC32 of data
+// 17+ repeats the branch root page pointer format from the root records.
 
 // PageType.Branch (3)
 // This page contains a list of BTree branches and leaves known.
 // 1-4 - CRC32 of page data
 // 4-12 - pointer to next branch page (0 if no more branches)
+// 13-16 - Data length
 // Data - Formatted as follows (Repeats)
-// 
+// N starts at 17
+
 // N to N+6 byte key, always interpreted as unsigned 64 bit number for BTree sort purposes.
 // N+16 to N+24 data page pointer (0 if no record at this key)
 // N+24 to N+32 page pointer for left branch/leaf (0 if no left branch, ignore page record)
 // N+32 to N+40 page pointer for right branch/leaf (0 if no right branch, ignore page record)
-// N+40 to N+44 page record for left branch/leaf (record number within the page)
-// N+44 to N+48 page record for right branch/leaf (record number within the page)
+// N+40 to N+44 page record for left branch/leaf (record number within the page, zero indexed)
+// N+44 to N+48 page record for right branch/leaf (record number within the page, zero indexed)
 
 // Every BTree node can also contain data, branch vs leaf is only determined by the data page pointer 
 
 // PageType.Data (4)
-// This page contains data, after a 4 byte CRC32 checksum of that data.
+// This page contains data, after a pointer to the next data block and a 4 byte CRC32 checksum of that data.
+// 1-8 - Pointer to next data block
+// 9-12 - data block length
+// 13-16 - Data CRC32
+// 17-(17+dataLength) - Data 
 
 // PageType.FreePageIndex
-// 1-4 CRC32 of the page data
-// 4-12 pointer to next free page index page
+// 1-8 pointer to next free page index page
+// 8-12 CRC32 of the page data
 // Page data is repeated as follows:
 // Page Pointer to first free page
-// 4 byte count of free pages following the previous page (0 if no longer free/can be re-used for another free page)
+// 4 byte count of free pages following the previous page (0 if no longer free/can be re-used for another free page), 1 if a single page, etc
