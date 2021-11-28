@@ -1,8 +1,7 @@
 ﻿namespace Panda.Data.Pages;
 
-public interface IPage<T> where T : IPage<T>
+public interface IPage<T> : IUnknownPage where T : IPage<T>
 {
-    PageType PageType { get; }
 }
 
 // The decoder does not need to know the page size.
@@ -50,4 +49,3 @@ public interface IPage<T> where T : IPage<T>
 // Page data is repeated as follows:
 // Page Pointer to first free page
 // 4 byte count of free pages following the previous page (0 if no longer free/can be re-used for another free page)
-

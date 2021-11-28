@@ -7,5 +7,6 @@ public enum PageType : byte
     RootContinuation = 2,
     Branch = 3,
     Data = 4,
-    FreePageIndex = 5
+    FreePageIndex = 5,
+    Unknown = 0xFF // Corrupt, Free, or uninitialized.
 }
