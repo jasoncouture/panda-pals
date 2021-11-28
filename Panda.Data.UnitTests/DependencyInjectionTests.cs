@@ -1,11 +1,19 @@
 using Microsoft.Extensions.DependencyInjection;
 using Panda.Data.Pages;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Panda.Data.UnitTests;
 
 public class DependencyInjectionTests
 {
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public DependencyInjectionTests(ITestOutputHelper testOutputHelper)
+    {
+        _testOutputHelper = testOutputHelper;
+    }
+
     [Fact]
     public void ContainerPassesVerification()
     {
@@ -30,5 +38,17 @@ public class DependencyInjectionTests
         var pageReader = scope.ServiceProvider.GetRequiredService<IPageReader>();
         
         Assert.NotNull(pageReader);
+    }
+
+    [Fact]
+    public void DumpContainerServices()
+    {
+        var services = new ServiceCollection();
+        services.AddPandaDataServices();
+
+        foreach (var service in services)
+        {
+            _testOutputHelper.WriteLine(service.ToString());
+        }
     }
 }
