@@ -4,6 +4,7 @@ using Panda.Data.Pages;
 using Panda.Data.Pages.Data;
 using Panda.Data.Pages.Free;
 using Panda.Data.Pages.Root;
+using Panda.Data.PageStore;
 using Xunit;
 
 namespace Panda.Data.UnitTests;
@@ -22,31 +23,36 @@ public class PageReaderTests
     [Fact]
     public void UnknownPageDecoderCanHandleAllKnownPages()
     {
-        var pageMemory = new[]
+        var pageStore = new MemoryPageStore();
+        var pageReader = _serviceProvider.GetRequiredService<IPageReader>();
+
+        void SerializePage<T>(T page, ulong pageNumber) where T : IPage<T>
         {
-            new Memory<byte>(new byte[512]),
-            new Memory<byte>(new byte[512]),
-            new Memory<byte>(new byte[512])
-        };
-        
-        void SerializePage<T>(T page, Memory<byte> memory) where T : IPage<T>
+            using var pageBlock = pageStore.OpenPage(pageNumber);
+            _serviceProvider.GetRequiredService<IPageEncoder<T>>().EncodePage(page, pageBlock.Memory);
+            pageBlock.MakeDurable();
+        }
+
+        IUnknownPage? ReadPage(ulong pageNumber)
         {
-            _serviceProvider.GetRequiredService<IPageEncoder<T>>().EncodePage(page, memory);
+            using var pageBlock = pageStore.OpenReadOnlyPage(pageNumber);
+            return pageReader.ReadPage(pageBlock.ReadOnlyMemory);
         }
 
         var rootPage = new RootPage(1, 0, 2, 3ul, 4ul, Guid.NewGuid().ToByteArray());
         var freePage = new FreePage();
         var dataPage = new DataPage(1ul, 2, Guid.NewGuid().ToByteArray());
 
-        SerializePage(rootPage, pageMemory[0]);
-        SerializePage(freePage, pageMemory[1]);
-        SerializePage(dataPage, pageMemory[2]);
 
-        var pageReader = _serviceProvider.GetRequiredService<IPageReader>();
+        SerializePage(rootPage, 0);
+        SerializePage(freePage, 1);
+        SerializePage(dataPage, 2);
 
-        var readRootPage = pageReader.ReadPage(pageMemory[0]);
-        var readFreePage = pageReader.ReadPage(pageMemory[1]);
-        var readDataPage = pageReader.ReadPage(pageMemory[2]);
+
+
+        var readRootPage = ReadPage(0);
+        var readFreePage = ReadPage(1);
+        var readDataPage = ReadPage(2);
 
         Assert.IsAssignableFrom<RootPage>(readRootPage);
         Assert.IsAssignableFrom<FreePage>(readFreePage);
