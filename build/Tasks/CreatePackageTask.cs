@@ -26,7 +26,7 @@ public class CreatePackageTask : FrostingTask<BuildContext>
 
     private string BuildFileName(BuildContext context)
     {
-        StringBuilder releaseZipNameBuilder = new StringBuilder("release");
+        var releaseZipNameBuilder = new StringBuilder("release");
         var gitVersion = context.CurrentGitVersionData;
 
         releaseZipNameBuilder.AppendFormat("-{0}-{1}", gitVersion.SemVer, gitVersion.Sha[..7]);

@@ -23,7 +23,7 @@ public class RootPageEncoder : IPageEncoder<RootPage>, IPageDecoder<RootPage>
         var pageBodyBytes = BitConverter.ToInt32(span[7..]);
         var pageFreePageIndexPageNumber = BitConverter.ToUInt64(span[257..]);
         var pageRootContinuationPageNumber = BitConverter.ToUInt64(span[265..]);
-        byte[] pagePageBody = Array.Empty<byte>();
+        var pagePageBody = Array.Empty<byte>();
         // Does our length make sense?
         if (pageBodyBytes > 0 && (pageBodyBytes + rootPageDataOffset) <= span.Length)
         {

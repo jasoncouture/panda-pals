@@ -17,13 +17,14 @@ public record RootPage(byte FileVersion, byte PageSizePower, uint Checksum, ulon
     // 273+ repeats the following structure:
     //  16 byte start key, 16 byte end key, page pointer to branch start for range (Also 8 bytes)
     // If the start key == the end key, this record is not valid.
+    // This page should not change often, or really ever. It's meant to be built on DB init, and generally left alone.
     public int PageSize => (int)(Math.Pow(2, PageSizePower) * 512);
 
     // This isn't cached, because the engine should only be using this on startup to track the root branches.
     // After startup, this field is write only. (In theory)
     public IEnumerable<BranchPagePointer> GetBranchPagePointers()
     {
-        ReadOnlyMemory<byte> memory = new ReadOnlyMemory<byte>(PageData ?? Array.Empty<byte>());
+        var memory = new ReadOnlyMemory<byte>(PageData ?? Array.Empty<byte>());
         List<BranchPagePointer> pagePointers = new();
         var span = memory.Span;
         while (true)

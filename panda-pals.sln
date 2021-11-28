@@ -28,9 +28,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Data", "Panda.Data\Panda.Data.csproj", "{43B213BE-BF9A-4108-9B10-9A8E7853072E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Data", "Panda.Data\Panda.Data.csproj", "{43B213BE-BF9A-4108-9B10-9A8E7853072E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Data.UnitTests", "Panda.Data.UnitTests\Panda.Data.UnitTests.csproj", "{21ECCA30-EEF7-4FDE-BEAA-09F418710492}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Data.UnitTests", "Panda.Data.UnitTests\Panda.Data.UnitTests.csproj", "{21ECCA30-EEF7-4FDE-BEAA-09F418710492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
