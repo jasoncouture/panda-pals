@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Panda.Data.Pages;
+using Panda.Data.Pages.Data;
 using Panda.Data.Pages.Free;
 using Panda.Data.Pages.Root;
 
@@ -11,6 +12,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddRootPage();
         services.AddFreePage();
+        services.AddDataPage();
         services.AddSingleton<IPageReader, PageReader>();
         services.AddSingleton<IPageTypeIdentifier, PageTypeIdentifier>();
         return services;
@@ -29,6 +31,14 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IPageDecoder<RootPage>, RootPageEncoder>();
         services.AddSingleton<IPageEncoder<RootPage>, RootPageEncoder>();
         services.AddSingleton<IUnknownPageDecoder, RootPageUnknownPageDecoder>();
+        return services;
+    }
+
+    internal static IServiceCollection AddDataPage(this IServiceCollection services)
+    {
+        services.AddSingleton<IPageDecoder<DataPage>, DataPageEncoder>();
+        services.AddSingleton<IPageEncoder<DataPage>, DataPageEncoder>();
+        services.AddSingleton<IUnknownPageDecoder, DataPageUnknownPageDecoder>();
         return services;
     }
 }
