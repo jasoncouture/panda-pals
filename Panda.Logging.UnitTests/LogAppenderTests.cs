@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Panda.DataIntegrity;
 using Panda.Logging.Physical;
 using Panda.Logging.Physical.File;
 using Xunit;

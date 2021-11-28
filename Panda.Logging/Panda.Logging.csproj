@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Panda.DataIntegrity\Panda.DataIntegrity.csproj" />
+  </ItemGroup>
+
 </Project>

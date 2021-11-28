@@ -1,4 +1,5 @@
-﻿using Panda.Logging.Endianness;
+﻿using Panda.DataIntegrity;
+using Panda.Logging.Endianness;
 using System.Buffers;
 
 namespace Panda.Logging.Physical;

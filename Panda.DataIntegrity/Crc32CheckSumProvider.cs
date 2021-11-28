@@ -1,4 +1,4 @@
-﻿namespace Panda.Logging.Physical;
+﻿namespace Panda.DataIntegrity;
 
 /// <summary>
 /// Performs 32-bit reversed cyclic redundancy checks.
