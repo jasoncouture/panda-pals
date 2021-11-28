@@ -1,7 +1,6 @@
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Common.Tools.DotNet;
-using Cake.Common.Tools.GitVersion;
 using Cake.Frosting;
 
 namespace Build.Tasks;

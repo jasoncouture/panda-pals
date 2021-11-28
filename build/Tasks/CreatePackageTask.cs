@@ -1,8 +1,6 @@
-using System.IO;
 using System.Linq;
 using System.Text;
 using Cake.Common.IO;
-using Cake.Common.Tools.GitVersion;
 using Cake.Core.IO;
 using Cake.Frosting;
 
