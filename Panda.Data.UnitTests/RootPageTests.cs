@@ -22,12 +22,13 @@ public class RootPageTests
     public void RootPageEncodeDecodeTest()
     {
         var expectedRootPage = new RootPage(1, 0, 2, 3, 4, Array.Empty<byte>()).WithPagePointers(_branches);
-        var systemUnderTest = new RootPageEncoder();
+        var rootPageEncoder = new RootPageEncoder();
+        var rootPageDecoder = new RootPageDecoder();
         var page = new Memory<byte>(new byte[512]);
 
-        systemUnderTest.EncodePage(expectedRootPage, page);
+        rootPageEncoder.EncodePage(expectedRootPage, page);
 
-        var actualRootPage = systemUnderTest.DecodePage(page);
+        var actualRootPage = rootPageDecoder.DecodePage(page);
         Assert.NotNull(actualRootPage.PageData);
         Assert.NotEmpty(actualRootPage.PageData!);
         Assert.Equal(expectedRootPage.PageData, actualRootPage.PageData);

@@ -1,6 +1,6 @@
 ﻿namespace Panda.Data.Pages.Root;
 
-public class RootPageEncoder : IPageEncoder<RootPage>, IPageDecoder<RootPage>
+public class RootPageDecoder : IPageDecoder<RootPage>
 {
     const int rootPageDataOffset = 273;
     public RootPage DecodePage(ReadOnlyMemory<byte> page)
@@ -46,7 +46,11 @@ public class RootPageEncoder : IPageEncoder<RootPage>, IPageDecoder<RootPage>
             PageData = pagePageBody
         };
     }
+}
 
+public class RootPageEncoder : IPageEncoder<RootPage>
+{
+    const int rootPageDataOffset = 273;
     public void EncodePage(RootPage page, Memory<byte> buffer)
     {
         if (buffer.Length < page.PageSize) throw new ArgumentException("PageSize must exactly match the page size of the root page.", nameof(buffer));

@@ -3,6 +3,7 @@ using Panda.Data.Pages;
 using Panda.Data.Pages.Data;
 using Panda.Data.Pages.Free;
 using Panda.Data.Pages.Root;
+using Panda.DataIntegrity;
 
 namespace Panda.Data;
 
@@ -13,6 +14,7 @@ public static class ServiceCollectionExtensions
         services.AddRootPage();
         services.AddFreePage();
         services.AddDataPage();
+        services.AddDataIntegrityServices();
         services.AddSingleton<IPageReader, PageReader>();
         services.AddSingleton<IPageTypeIdentifier, PageTypeIdentifier>();
         return services;
@@ -28,7 +30,7 @@ public static class ServiceCollectionExtensions
 
     internal static IServiceCollection AddRootPage(this IServiceCollection services)
     {
-        services.AddSingleton<IPageDecoder<RootPage>, RootPageEncoder>();
+        services.AddSingleton<IPageDecoder<RootPage>, RootPageDecoder>();
         services.AddSingleton<IPageEncoder<RootPage>, RootPageEncoder>();
         services.AddSingleton<IUnknownPageDecoder, RootPageUnknownPageDecoder>();
         return services;
@@ -36,7 +38,7 @@ public static class ServiceCollectionExtensions
 
     internal static IServiceCollection AddDataPage(this IServiceCollection services)
     {
-        services.AddSingleton<IPageDecoder<DataPage>, DataPageEncoder>();
+        services.AddSingleton<IPageDecoder<DataPage>, DataPageDecoder>();
         services.AddSingleton<IPageEncoder<DataPage>, DataPageEncoder>();
         services.AddSingleton<IUnknownPageDecoder, DataPageUnknownPageDecoder>();
         return services;
